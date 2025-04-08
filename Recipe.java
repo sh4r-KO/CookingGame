@@ -4,11 +4,14 @@ public class Recipe {
     private Map<Ingredient, Integer> ingredients;
     private String description;
     private String equipment;
+    private float duration;
 
-    public Recipe(Map<Ingredient, Integer> ingredients, String description, String equipment) {
+
+    public Recipe(Map<Ingredient, Integer> ingredients, String description, String equipment,float duration) {
         this.ingredients = ingredients;
         this.description = description;
         this.equipment = equipment;
+        this.duration = duration;
     }
 
     public Map<Ingredient, Integer> getIngredients() {
@@ -21,6 +24,10 @@ public class Recipe {
 
     public String getEquipment() {
         return equipment;
+    }
+
+    public float getDuration() {
+        return duration;
     }
 
     @Override

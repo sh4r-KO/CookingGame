@@ -18,13 +18,13 @@ public class Main {
             { put(Tomato, 2); }
             { put(Cheese, 1); }
         };
-        recipes.add(new Recipe(ingredients, "Tomato Melt", "Panini Press"));
+        recipes.add(new Recipe(ingredients, "Tomato Melt", "Panini Press",3));
 
         ingredients = new HashMap<Ingredient, Integer>() {
             { put(Meat, 2); }
             { put(Spice, 1); }
         };
-        recipes.add(new Recipe(ingredients, "Spicy Steak","Grill"));
+        recipes.add(new Recipe(ingredients, "Spicy Steak","Grill",3));
 
         // Shop stock
 
@@ -71,14 +71,21 @@ public class Main {
                         Recipe chosen = recipes.get(rChoice);
                         if (player.hasIngredients(chosen.getIngredients())) {
                             player.useIngredients(chosen.getIngredients());
-                            Meal meal = new Meal(chosen, new Random().nextInt(101)); // Random quality
-                            player.addGold(meal.getFinalPrice());
-                            System.out.println("Cooked and sold: " + meal);
+                            System.out.println("Cooking " + chosen.getDescription() + "... it will take 3 seconds.");
+                        
+                            RecipeTimer timer = new RecipeTimer();
+                            timer.startTimer(() -> {
+                                // This code is executed after 3 seconds
+                                Meal meal = new Meal(chosen, new Random().nextInt(101)); // Random quality
+                                player.addGold(meal.getFinalPrice());
+                                System.out.println("Cooked and sold: " + meal.getRecipe().getDescription()+" for "+meal.getFinalPrice()+"gold");
+                                // You may want to also update any UI, inform the player, etc.
+                            },((long)chosen.getDuration()*1000) );
                         } else {
                             System.out.println("Not enough ingredients!");
                         }
                     }
-                    try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+                    try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 
                     break;
 
