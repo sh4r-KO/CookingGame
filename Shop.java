@@ -11,14 +11,14 @@ public class Shop {
         System.out.println("Shop items:");
         for (int i = 0; i < stock.size(); i++) {
             Ingredient ing = stock.get(i);
-            System.out.println("[" + (i + 1) + "] " + ing.getName() + " x" + ing.getQuantity() + " - 1 gold each");
+            System.out.println("[" + (i + 1) + "] " + ing.getName() + " - "+ing.getPrice()+" gold");
         }
     }
 
     public Ingredient buy(int index) {
         if (index < 0 || index >= stock.size()) return null;
         Ingredient item = stock.get(index);
-        return new Ingredient(item.getName()); // Buy 1 unit
+        return new Ingredient(item.getName(),item.getPrice()); // Buy 1 unit
     }
 
     public int getPrice() {

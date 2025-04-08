@@ -1,26 +1,28 @@
 public class Ingredient {
     private String name;
-    private int quantity;//to delete
+    private int price;
 
-    public Ingredient(String name) {
+
+
+    public Ingredient(String name,int price) {
         this.name = name;
-        //this.quantity = quantity;
+        this.price = price;
     }
 
     public String getName() {
         return name;
     }
-
-    public int getQuantity() {
-        return quantity;
+    public int getPrice() {
+        return price;
     }
+
 
     @Override
     public String toString() {
         return name;
     }
 
-    // ⭐ These make the Map work properly
+    // These make the Map work properly
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

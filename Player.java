@@ -17,10 +17,13 @@ public class Player {
     public void addGold(int amount) {
         gold += amount;
     }
+    public void subGold(int amount) {
+        gold -= amount;
+    }
 
     public boolean spendGold(int amount) {
-        if (gold >= amount) {
-            gold -= amount;
+        if (this.gold >= amount) {
+            this.gold -= amount;
             return true;
         }
         return false;

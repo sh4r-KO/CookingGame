@@ -6,10 +6,10 @@ public class Main {
         Player player = new Player(10);
 
         //ingredients for recipes
-        Ingredient Tomato = new Ingredient("Tomato");
-        Ingredient Cheese = new Ingredient("Cheese");
-        Ingredient Meat = new Ingredient("Meat");
-        Ingredient Spice = new Ingredient("Spice");
+        Ingredient Tomato = new Ingredient("Tomato",1);
+        Ingredient Cheese = new Ingredient("Cheese",2);
+        Ingredient Meat = new Ingredient("Meat",3);
+        Ingredient Spice = new Ingredient("Spice",2);
 
         // Sample recipes
         List<Recipe> recipes = new ArrayList<>();
@@ -24,7 +24,6 @@ public class Main {
             { put(Meat, 2); }
             { put(Spice, 1); }
         };
-        
         recipes.add(new Recipe(ingredients, "Spicy Steak","Grill"));
 
         // Shop stock
@@ -97,8 +96,11 @@ public class Main {
                         if (bChoice == -1)
                             break; // Go back
                         if (bChoice >= 0 && bChoice < shop.size()) {
-                            if (player.spendGold(shop.getPrice())) {
-                                player.addIngredient(shop.buy(bChoice),1);
+                            Ingredient tmp = shop.buy(bChoice);
+                            if (player.getGold()>=tmp.getPrice()) {
+                                player.addIngredient(tmp,1);
+                                
+                                player.spendGold(tmp.getPrice());
                                 System.out.println("Item bought!");
                             } else {
                                 System.out.println("Not enough gold!");
