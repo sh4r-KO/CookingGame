@@ -1,3 +1,4 @@
+package model;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +44,9 @@ public class Player {
         return true;
     }
     
-    
+    public boolean buy(){
+        return true;
+    }
 
     public void useIngredients(Map<Ingredient, Integer> required) {
         for (Map.Entry<Ingredient, Integer> entry : required.entrySet()) {
@@ -59,7 +62,7 @@ public class Player {
     }
     
 
-    public void showInventory() {
+    public void printInventory() {
         System.out.println("Inventory:");
         if (inventory.isEmpty()) {
             System.out.println("- empty -");

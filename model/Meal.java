@@ -1,4 +1,4 @@
-import java.util.Random;
+package model;
 
 public class Meal {
     private Recipe recipe;

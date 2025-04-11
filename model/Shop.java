@@ -1,3 +1,4 @@
+package model;
 import java.util.List;
 
 import javafx.util.Pair;
@@ -9,7 +10,7 @@ public class Shop {
         this.stock = stock;
     }
 
-    public void showStock() {
+    /*public void printStock() {
         System.out.println("Shop items:");
         for (int i = 0; i < stock.size(); i++) {
             Ingredient ing = stock.get(i);
@@ -17,7 +18,7 @@ public class Shop {
         }
     }
 
-    /*public Ingredient buy(int index) {
+    public Ingredient buy(int index) {
         if (index < 0 || index >= stock.size()) return null;
         Ingredient item = stock.get(index);
         return new Ingredient(item.getName(),item.getPrice()); // Buy 1 unit
@@ -31,6 +32,10 @@ public class Shop {
 
     public int getPrice() {
         return 1; // Flat price for simplicity
+    }
+
+    public List<Ingredient> getStock() {
+        return this.stock; // Flat price for simplicity
     }
 
     public int size() {

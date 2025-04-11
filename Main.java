@@ -1,6 +1,14 @@
 import java.util.*;
-
 import javafx.util.Pair;
+import model.Ingredient;
+import model.Meal;
+import model.Player;
+import model.Recipe;
+import model.RecipeTimer;
+import model.Shop;
+import view.*;
+
+
 
 public class Main {
     public static void main(String[] args) {
@@ -33,9 +41,11 @@ public class Main {
 
 
         Shop shop = new Shop(Arrays.asList(Tomato,Cheese,Meat,Spice));
-
+        ConsoleView cView = new ConsoleView();
+        ShopView sView = new ShopView(cView);
+        RecipeView rview = new RecipeView();
         while (true) {
-            System.out.print("\033[H\033[2J");//todelete if things dont sho up
+            System.out.print("\033[H\033[2J");//todelete if things dont show up
             System.out.flush();                 //as well
 
 
@@ -54,21 +64,13 @@ public class Main {
                     System.out.println("Choose a recipe:");
                     for (int i = 0; i < recipes.size(); i++) {
                         Recipe recipe = recipes.get(i);
-                        System.out.println("[" + (i + 1) + "] " + recipe.getDescription());
-                        System.out.print("    Requires: ");
-                        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
-                            Ingredient ing = entry.getKey();
-                            Integer qty = entry.getValue();
-                            System.out.print(ing + " x" + qty + " ");
-                        }
-                        System.out.println("\n    Equipment: " + recipe.getEquipment());
+                        System.out.println("[" + (i + 1) + "] " + rview.recipeToString(recipe)+"\n");
                     }
                     System.out.println("[0] Go back");
-                    System.out.println("\n-----------");
+                    System.out.println("-----------");
 
                     int rChoice = Integer.parseInt(scanner.nextLine()) - 1;
-                    if (rChoice == -1)
-                        break; // Go back
+                    if (rChoice == -1)break; // Go back
                     if (rChoice >= 0 && rChoice < recipes.size()) {
                         Recipe chosen = recipes.get(rChoice);
                         if (player.hasIngredients(chosen.getIngredients())) {
@@ -97,24 +99,21 @@ public class Main {
                         System.out.flush();                 //as well
                         System.out.println("\n-----------");
                         System.out.println("\nYour gold: " + player.getGold());
-                        shop.showStock();
+                        //shop.printStock();
+                        sView.printStock(shop.getStock());
+                        
                         System.out.println("[0] Go back");
                         System.out.print("Choose item number to buy: ");
                         System.out.println("\n-----------");
-
                         int bChoice = Integer.parseInt(scanner.nextLine()) - 1;
                         System.out.print("how much :");
 
-                       
-
-
-                        if (bChoice == -1)
-                            break; // Go back
+                        if (bChoice == -1)break; // Go back
                         if (bChoice >= 0 && bChoice < shop.size()) {
+                            //player.buy()
                             int bChoiceqty = Integer.parseInt(scanner.nextLine());
                             System.out.print("passing order..");
 
-                            //Ingredient tmp = shop.buy(bChoice); //cant choose qty
                             Pair<Ingredient,Integer> tmp2 =  shop.buy(bChoice,bChoiceqty);
                             int qty = tmp2.getValue();
                             Ingredient tmp = tmp2.getKey();
@@ -139,7 +138,7 @@ public class Main {
                     System.out.println("\n-----------");
                     System.out.println("\nYour gold: " + player.getGold());
 
-                    player.showInventory();
+                    player.printInventory();
                     System.out.println("[0] Go back");
 
                     int goback = Integer.parseInt(scanner.nextLine()) - 1;
