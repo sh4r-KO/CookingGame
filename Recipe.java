@@ -4,14 +4,16 @@ public class Recipe {
     private Map<Ingredient, Integer> ingredients;
     private String description;
     private String equipment;
-    private float duration;
+    private long duration;
+    private int price;
 
 
-    public Recipe(Map<Ingredient, Integer> ingredients, String description, String equipment,float duration) {
+    public Recipe(Map<Ingredient, Integer> ingredients, String description, String equipment,long duration,int price) {
         this.ingredients = ingredients;
         this.description = description;
         this.equipment = equipment;
         this.duration = duration;
+        this.price = price;
     }
 
     public Map<Ingredient, Integer> getIngredients() {
@@ -26,8 +28,12 @@ public class Recipe {
         return equipment;
     }
 
-    public float getDuration() {
+    public long getDuration() {
         return duration;
+    }
+
+    public int getPrice() {
+        return this.price;
     }
 
     @Override
@@ -42,4 +48,6 @@ public class Recipe {
         sb.append('}');
         return sb.toString();
     }
+
+
 }

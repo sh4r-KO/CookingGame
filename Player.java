@@ -30,7 +30,7 @@ public class Player {
     }
 
     public void addIngredient(Ingredient ing, int quantity) {
-        inventory.put(ing, inventory.getOrDefault(ing, 0) + quantity);
+        inventory.put(ing, (inventory.getOrDefault(ing, 0) + quantity));
     }
 
     public boolean hasIngredients(Map<Ingredient, Integer> required) {

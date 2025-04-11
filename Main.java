@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javafx.util.Pair;
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -18,13 +20,13 @@ public class Main {
             { put(Tomato, 2); }
             { put(Cheese, 1); }
         };
-        recipes.add(new Recipe(ingredients, "Tomato Melt", "Panini Press",3));
+        recipes.add(new Recipe(ingredients, "Tomato Melt", "Panini Press",3,5));
 
         ingredients = new HashMap<Ingredient, Integer>() {
             { put(Meat, 2); }
             { put(Spice, 1); }
         };
-        recipes.add(new Recipe(ingredients, "Spicy Steak","Grill",3));
+        recipes.add(new Recipe(ingredients, "Spicy Steak","Grill",3,10));
 
         // Shop stock
 
@@ -78,9 +80,9 @@ public class Main {
                                 // This code is executed after 3 seconds
                                 Meal meal = new Meal(chosen, new Random().nextInt(101)); // Random quality
                                 player.addGold(meal.getFinalPrice());
-                                System.out.println("Cooked and sold: " + meal.getRecipe().getDescription()+" for "+meal.getFinalPrice()+"gold");
+                                System.out.println("Cooked and sold: " + meal.getRecipe().getDescription()+"\t for "+meal.getFinalPrice()+"gold");
                                 // You may want to also update any UI, inform the player, etc.
-                            },((long)chosen.getDuration()*1000) );
+                            },(chosen.getDuration()*1000) );
                         } else {
                             System.out.println("Not enough ingredients!");
                         }
@@ -94,21 +96,33 @@ public class Main {
                         System.out.print("\033[H\033[2J");//todelete if things dont sho up
                         System.out.flush();                 //as well
                         System.out.println("\n-----------");
+                        System.out.println("\nYour gold: " + player.getGold());
                         shop.showStock();
                         System.out.println("[0] Go back");
                         System.out.print("Choose item number to buy: ");
                         System.out.println("\n-----------");
 
                         int bChoice = Integer.parseInt(scanner.nextLine()) - 1;
+                        System.out.print("how much :");
+
+                       
+
+
                         if (bChoice == -1)
                             break; // Go back
                         if (bChoice >= 0 && bChoice < shop.size()) {
-                            Ingredient tmp = shop.buy(bChoice);
-                            if (player.getGold()>=tmp.getPrice()) {
-                                player.addIngredient(tmp,1);
+                            int bChoiceqty = Integer.parseInt(scanner.nextLine());
+                            System.out.print("passing order..");
+
+                            //Ingredient tmp = shop.buy(bChoice); //cant choose qty
+                            Pair<Ingredient,Integer> tmp2 =  shop.buy(bChoice,bChoiceqty);
+                            int qty = tmp2.getValue();
+                            Ingredient tmp = tmp2.getKey();
+                            if (player.getGold()>=(tmp.getPrice()*qty)) {
+                                player.addIngredient(tmp,(1*qty));
                                 
-                                player.spendGold(tmp.getPrice());
-                                System.out.println("Item bought!");
+                                player.spendGold((tmp.getPrice()*qty));
+                                System.out.println("Item(s) bought!");
                             } else {
                                 System.out.println("Not enough gold!");
                             }
@@ -123,6 +137,7 @@ public class Main {
 
                 case "3": // Show inventory
                     System.out.println("\n-----------");
+                    System.out.println("\nYour gold: " + player.getGold());
 
                     player.showInventory();
                     System.out.println("[0] Go back");
