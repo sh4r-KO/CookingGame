@@ -3,6 +3,7 @@ package view;
 import model.Recipe;
 import model.Ingredient;
 
+import java.util.List;
 import java.util.Map;
 
 public class RecipeView {
@@ -21,17 +22,30 @@ public class RecipeView {
     }
 
     public String recipeToString(Recipe recipe) {
-        String ret = ""+
-        //"\n=== Recipe Details ==="+
-        "__" + recipe.getDescription()+"__"+
-        "\t  " + recipe.getDuration() + " seconds"+
-        "\t  " + recipe.getPrice() + " gold"+
-        "\t  " + recipe.getEquipment();
+        String ret = "" +
+        // "\n=== Recipe Details ==="+
+                "__" + recipe.getDescription() + "__" +
+                "\t  " + recipe.getDuration() + " seconds" +
+                "\t  " + recipe.getPrice() + " gold" +
+                "\t  " + recipe.getEquipment();
 
-            
         for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
-            ret+="\n\t- " + entry.getKey().getName() + " x" + entry.getValue();
+            ret += "\n\t- " + entry.getKey().getName() + " x" + entry.getValue();
         }
+        return ret;
+    }
+
+    public String recipeListToString(List<Recipe> recipes) {
+
+        String ret = "" +
+                "\n=== Recipes ===\n";
+        for (int i = 0; i < recipes.size(); i++) {
+            Recipe recipe = recipes.get(i);
+            ret += "[" + (i + 1) + "] " + this.recipeToString(recipe)+"\n";
+            //System.out.println("[" + (i + 1) + "] " + rview.recipeToString(recipe)+"\n");
+        }
+        ret+="[0] Go back"+
+        "\n-----------";
         return ret;
     }
 

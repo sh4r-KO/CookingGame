@@ -58,40 +58,37 @@ public class Main {
 
             switch (input) {
                 case "1": // Cook
-                    System.out.print("\033[H\033[2J");//todelete if things dont sho up
-                    System.out.flush();                 //as well
-                    System.out.println("\n-----------");
-                    System.out.println("Choose a recipe:");
-                    for (int i = 0; i < recipes.size(); i++) {
-                        Recipe recipe = recipes.get(i);
-                        System.out.println("[" + (i + 1) + "] " + rview.recipeToString(recipe)+"\n");
-                    }
-                    System.out.println("[0] Go back");
-                    System.out.println("-----------");
+                    System.out.print("\033[H\033[2J"); // Clear screen (console specific)
+                    System.out.flush();
+                    System.out.println(rview.recipeListToString(recipes));
 
                     int rChoice = Integer.parseInt(scanner.nextLine()) - 1;
-                    if (rChoice == -1)break; // Go back
-                    if (rChoice >= 0 && rChoice < recipes.size()) {
+                    if (rChoice == -1)
+                        break; // Go back
+                    
+                    if (rChoice >= 0 && rChoice < recipes.size()) { 
                         Recipe chosen = recipes.get(rChoice);
-                        if (player.hasIngredients(chosen.getIngredients())) {
-                            player.useIngredients(chosen.getIngredients());
-                            System.out.println("Cooking " + chosen.getDescription() + "... it will take 3 seconds.");
                         
-                            RecipeTimer timer = new RecipeTimer();
-                            timer.startTimer(() -> {
-                                // This code is executed after 3 seconds
-                                Meal meal = new Meal(chosen, new Random().nextInt(101)); // Random quality
-                                player.addGold(meal.getFinalPrice());
-                                System.out.println("Cooked and sold: " + meal.getRecipe().getDescription()+"\t for "+meal.getFinalPrice()+"gold");
-                                // You may want to also update any UI, inform the player, etc.
-                            },(chosen.getDuration()*1000) );
+                        // Start the cooking process with a callback to display the completion message.
+                        boolean cookingStarted = player.cook(chosen, message -> {
+                            // This code will be executed when the cooking timer finishes.
+                            System.out.println(message);
+                        });
+                        
+                        if (cookingStarted) {
+                            System.out.println("Cooking " + chosen.getDescription() + "... it will take " + chosen.getDuration() + " seconds.");
                         } else {
                             System.out.println("Not enough ingredients!");
                         }
                     }
-                    try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-
+                    
+                    try {
+                        Thread.sleep(500); // Allow time for the message to be visible
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     break;
+
 
                 case "2": // Buy
                     while (true) {
@@ -135,17 +132,23 @@ public class Main {
 
 
                 case "3": // Show inventory
-                    System.out.println("\n-----------");
+
+                    System.out.print("\033[H\033[2J");//todelete if things dont sho up
+                    System.out.flush();                 //as well
+                    PlayerView playerView = new PlayerView();
+                    System.out.println(playerView.inventoryToString(player));
+
+                    /*System.out.println("\n-----------");
                     System.out.println("\nYour gold: " + player.getGold());
 
                     player.printInventory();
                     System.out.println("[0] Go back");
-
+*/
                     int goback = Integer.parseInt(scanner.nextLine()) - 1;
                     if(goback==0){
                         System.out.println("\n-----------");
                         break;
-                    }                    
+                    }
                     System.out.println("\n-----------");
 
                     break;

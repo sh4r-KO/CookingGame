@@ -2,6 +2,8 @@ package view;
 
 import java.util.Scanner;
 
+import model.Player;
+
 public class ConsoleView {
     private final Scanner scanner;
 
@@ -25,5 +27,15 @@ public class ConsoleView {
     public String getInputString(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine();
+    }
+
+    public void clearScreen() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'clearScreen'");
+    }
+
+    public void displayRecipeList(Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'displayRecipeList'");
     }
 }

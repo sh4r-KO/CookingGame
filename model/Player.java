@@ -1,6 +1,7 @@
 package model;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Player {
     private int gold;
@@ -73,4 +74,28 @@ public class Player {
         }
     }
 
+    public boolean cook(Recipe recipe, CookingCallback callback) {
+        if (hasIngredients(recipe.getIngredients())) {
+            useIngredients(recipe.getIngredients());
+            
+            RecipeTimer timer = new RecipeTimer();
+            timer.startTimer(() -> {
+                Meal meal = new Meal(recipe, new Random().nextInt(101)); // Random quality
+                this.addGold(meal.getFinalPrice());
+                // Notify via the callback once cooking is complete.
+                callback.onCookingCompleted("Cooked and sold: " + 
+                                            meal.getRecipe().getDescription() +
+                                            " for " + meal.getFinalPrice() + " gold");
+            }, recipe.getDuration() * 1000);
+            return true;
+        }
+        return false;
+    }
+    public interface CookingCallback {
+        void onCookingCompleted(String message);
+    }
+    public Map<Ingredient, Integer> getInventory() {
+        return inventory;
+    }
+    
 }
