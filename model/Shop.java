@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 //import javafx.util.Pair;
+//import javafx.util.Pair;
+import model.Pair; // Uncomment this line if you are using JavaFX
+//TODO: PARI IS NOT WORKING
 
 public class Shop {
     private List<Ingredient> stock;
