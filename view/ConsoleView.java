@@ -30,8 +30,8 @@ public class ConsoleView {
     }
 
     public void clearScreen() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clearScreen'");
+        System.out.print("\033[H\033[2J");//todelete if things dont sho up
+        System.out.flush();                 //as well
     }
 
     public void displayRecipeList(Player player) {

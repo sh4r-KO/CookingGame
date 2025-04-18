@@ -1,11 +1,8 @@
 import java.util.*;
 import javafx.util.Pair;
-import model.Ingredient;
-import model.Meal;
-import model.Player;
-import model.Recipe;
-import model.RecipeTimer;
-import model.Shop;
+
+import model.*;
+
 import view.*;
 
 
@@ -16,13 +13,24 @@ public class Main {
         Player player = new Player(10);
 
         //ingredients for recipes
-        Ingredient Tomato = new Ingredient("Tomato",1);
-        Ingredient Cheese = new Ingredient("Cheese",2);
-        Ingredient Meat = new Ingredient("Meat",3);
-        Ingredient Spice = new Ingredient("Spice",2);
+        //Ingredient Tomato = new Ingredient("Tomato",1);
+
 
         // Sample recipes
-        List<Recipe> recipes = new ArrayList<>();
+        Recipe r = new Recipe();
+        List<Recipe> recipes  = r.ListreadRecipeFromCsv();
+
+        List<Ingredient> stock = new ArrayList<>();
+
+        for (Recipe recipe : recipes) {
+            stock.addAll(recipe.getIngredients().keySet());
+        }
+        //TODO: check double ingredients in stock/recipes. a recipe can have the same ingredient multiple times which are 2 differnet java objects can cause some issues
+        Shop shop = new Shop(stock);
+        shop.deleteDuplicate();
+
+
+        /*List<Recipe> recipes = new ArrayList<>();
 
         Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>() {
             { put(Tomato, 2); }
@@ -36,14 +44,18 @@ public class Main {
         };
         recipes.add(new Recipe(ingredients, "Spicy Steak","Grill",3,10));
 
+        */
+
         // Shop stock
 
 
 
-        Shop shop = new Shop(Arrays.asList(Tomato,Cheese,Meat,Spice));
+        //Shop shop = new Shop(Arrays.asList(Tomato,Cheese,Meat,Spice));
         ConsoleView cView = new ConsoleView();
         ShopView sView = new ShopView(cView);
         RecipeView rview = new RecipeView();
+        PlayerView playerView = new PlayerView();
+
         while (true) {
             System.out.print("\033[H\033[2J");//todelete if things dont show up
             System.out.flush();                 //as well
@@ -58,9 +70,10 @@ public class Main {
 
             switch (input) {
                 case "1": // Cook
-                    System.out.print("\033[H\033[2J"); // Clear screen (console specific)
-                    System.out.flush();
+                    cView.clearScreen();
+
                     System.out.println(rview.recipeListToString(recipes));
+                    System.out.println(playerView.inventoryToString(player));
 
                     int rChoice = Integer.parseInt(scanner.nextLine()) - 1;
                     if (rChoice == -1)
@@ -69,11 +82,11 @@ public class Main {
                     if (rChoice >= 0 && rChoice < recipes.size()) { 
                         Recipe chosen = recipes.get(rChoice);
                         
-                        // Start the cooking process with a callback to display the completion message.
-                        boolean cookingStarted = player.cook(chosen, message -> {
-                            // This code will be executed when the cooking timer finishes.
-                            System.out.println(message);
+                        boolean cookingStarted = player.cook(chosen, message -> {                        // Start the cooking process with a callback to display the completion message.
+                            System.out.println(message);                            // This code will be executed when the cooking timer finishes.
                         });
+
+                        
                         
                         if (cookingStarted) {
                             System.out.println("Cooking " + chosen.getDescription() + "... it will take " + chosen.getDuration() + " seconds.");
@@ -92,25 +105,22 @@ public class Main {
 
                 case "2": // Buy
                     while (true) {
-                        System.out.print("\033[H\033[2J");//todelete if things dont sho up
-                        System.out.flush();                 //as well
-                        System.out.println("\n-----------");
-                        System.out.println("\nYour gold: " + player.getGold());
+                        cView.clearScreen();
+                        System.out.println(playerView.goldToString(player));
                         //shop.printStock();
                         sView.printStock(shop.getStock());
-                        
                         System.out.println("[0] Go back");
                         System.out.print("Choose item number to buy: ");
                         System.out.println("\n-----------");
                         int bChoice = Integer.parseInt(scanner.nextLine()) - 1;
                         System.out.print("how much :");
+                        
 
                         if (bChoice == -1)break; // Go back
                         if (bChoice >= 0 && bChoice < shop.size()) {
                             //player.buy()
                             int bChoiceqty = Integer.parseInt(scanner.nextLine());
                             System.out.print("passing order..");
-
                             Pair<Ingredient,Integer> tmp2 =  shop.buy(bChoice,bChoiceqty);
                             int qty = tmp2.getValue();
                             Ingredient tmp = tmp2.getKey();
@@ -135,21 +145,12 @@ public class Main {
 
                     System.out.print("\033[H\033[2J");//todelete if things dont sho up
                     System.out.flush();                 //as well
-                    PlayerView playerView = new PlayerView();
                     System.out.println(playerView.inventoryToString(player));
 
-                    /*System.out.println("\n-----------");
-                    System.out.println("\nYour gold: " + player.getGold());
-
-                    player.printInventory();
-                    System.out.println("[0] Go back");
-*/
                     int goback = Integer.parseInt(scanner.nextLine()) - 1;
                     if(goback==0){
-                        System.out.println("\n-----------");
                         break;
                     }
-                    System.out.println("\n-----------");
 
                     break;
 

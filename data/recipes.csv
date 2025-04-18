@@ -1,0 +1,16 @@
+IngredientName1,price1,qty1,IngredientName2,price2,qty2,IngredientName3,price3,qty3,IngredientName4,price4,qty4,Description,Equipment,Duration,Reward
+Eggs,1,2,,,,,,,,,,Boiled eggs,Pot,10,5
+Bread,2,2,Butter,3,1,,,,,,,Buttered toast,Toaster,5,7
+Banana,1,1,,,,,,,,,,Banana snack,None,1,2
+Pasta,2,1,Salt,1,1,,,,,,,pasta,Pot,15,6
+Milk,2,1,Cocoa powder,3,1,,,,,,,Hot cocoa,Mug,5,4
+Rice,2,1,Water,0,2,,,,,,,Steamed rice,Rice cooker,20,5
+Apple,1,1,,,,,,,,,,apple snack,None,1,2
+Yogurt,2,1,Honey,3,1,,,,,,,Sweet yogurt cup,Spoon,2,4
+Cucumber,2,1,Salt,1,1,,,,,,,Quick cucumber snack,Knife,3,3
+Tea bag,1,1,Water,0,1,,,,,,,Tea,Kettle,5,2
+Cheese,4,1,Bread,2,1,,,,,,,Cheese sandwich,Pan,8,8
+Orange,1,1,,,,,,,,,,Peeled orange,None,2,2
+Coffee,2,1,Water,0,1,,,,,,,Black coffee,Pot,5,3
+Oats,2,1,Water,0,2,,,,,,,oatmeal,Pot,8,4
+Tomato,2,1,Olive oil,5,1,,,,,,,Tomato slices with oil,Knife,3,5

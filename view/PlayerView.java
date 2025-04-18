@@ -24,4 +24,8 @@ public class PlayerView {
 
         return ret.toString();
     }
+
+    public String goldToString(Player player) {
+        return "\nYour gold: " + player.getGold();
+    }
 }
