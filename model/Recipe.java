@@ -14,6 +14,7 @@ public class Recipe {
     private String equipment;
     private long duration;
     private int price;
+    private Equipment equipmentType;
 
     public Recipe(Map<Ingredient, Integer> ingredients, String description, String equipment, long duration,
             int price) {

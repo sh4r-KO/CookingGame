@@ -19,7 +19,7 @@ public class ShopView {
             return;
         }
     
-        // 1️⃣ Compute max name length for padding
+        //  Compute max name length for padding
         int maxNameLen = 0;
         for (Ingredient ing : stock) {
             maxNameLen = Math.max(maxNameLen, ing.getName().length());
@@ -29,10 +29,10 @@ public class ShopView {
         int cols = 3;
         int rows = (total + cols - 1) / cols;  // round up for 3 columns
     
-        // 2️⃣ Helper format for each cell
+        // 2 Helper format for each cell
         String cellFmt = "[%2d] %-" + maxNameLen + "s  %2d gold";
     
-        // 3️⃣ Print each row with up to three cells
+        // 3 Print each row with up to three cells
         for (int row = 0; row < rows; row++) {
             StringBuilder line = new StringBuilder();
     
